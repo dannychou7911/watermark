@@ -19,15 +19,23 @@ const store = useWatermarkStore()
       class="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-30"
     >
       <div class="mx-auto max-w-7xl px-4 md:px-6 py-3 flex items-center gap-3">
-        <div
-          class="w-9 h-9 rounded-lg bg-primary text-primary-foreground grid place-items-center shrink-0"
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-md -mx-1 px-1 py-1 hover:bg-muted transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          aria-label="回到首頁"
+          title="回到首頁（保留目前的浮水印設定）"
+          @click="store.clearSource()"
         >
-          <ImagePlus class="w-5 h-5" :stroke-width="2.25" />
-        </div>
-        <div class="flex-1 min-w-0">
+          <span
+            class="w-9 h-9 rounded-lg bg-primary text-primary-foreground grid place-items-center shrink-0"
+          >
+            <ImagePlus class="w-5 h-5" :stroke-width="2.25" />
+          </span>
           <h1 class="text-base md:text-lg font-semibold leading-tight">
             Watermark
           </h1>
+        </button>
+        <div class="flex-1 min-w-0">
           <p class="text-xs text-muted-foreground truncate">
             {{ store.state.source?.file.name }} —
             {{ store.state.source?.width }} × {{ store.state.source?.height }}
