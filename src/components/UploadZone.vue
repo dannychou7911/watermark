@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ImagePlus, Upload, ShieldCheck } from 'lucide-vue-next'
+import { Upload, ShieldCheck } from 'lucide-vue-next'
+import BrandLink from './BrandLink.vue'
 import { useWatermarkStore } from '@/composables/use-watermark-store'
 import { loadImageFromFile, pickFirstImage } from '@/lib/image-loader'
 
@@ -53,18 +54,8 @@ function openPicker() {
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="px-6 py-5 flex items-center gap-3">
-      <div
-        class="w-9 h-9 rounded-lg bg-primary text-primary-foreground grid place-items-center"
-      >
-        <ImagePlus class="w-5 h-5" :stroke-width="2.25" />
-      </div>
-      <div>
-        <h1 class="text-lg font-semibold leading-tight">Watermark</h1>
-        <p class="text-xs text-muted-foreground">
-          純前端離線浮水印工具
-        </p>
-      </div>
+    <header class="px-6 py-5">
+      <BrandLink large @click="errorMsg = null" />
     </header>
 
     <main class="flex-1 px-6 pb-10 grid place-items-center">
