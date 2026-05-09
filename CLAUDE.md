@@ -72,7 +72,7 @@ Follow this pattern when adding new image flows.
 
 ## Deployment
 
-`.github/workflows/deploy.yml` runs on push to `main`: install → `npm test` → `npm run build` → upload `dist/` as a GitHub Pages artifact → deploy. The site is at https://dannychou7911.github.io/watermark/. Don't change `base: './'` in `vite.config.ts` unless deploying to a fixed absolute path — relative base keeps the bundle portable.
+`.github/workflows/deploy.yml` runs on push to `main`: install → `npm test` → `npm run build` → upload `dist/` as a GitHub Pages artifact → deploy. The site is at https://watermark.dantoolkit.cc/ (custom domain via Cloudflare DNS → `dannychou7911.github.io`; `public/CNAME` carries the domain into `dist/`). Don't change `base: './'` in `vite.config.ts` unless deploying to a fixed absolute path — relative base keeps the bundle portable.
 
 ## Known caveats
 
