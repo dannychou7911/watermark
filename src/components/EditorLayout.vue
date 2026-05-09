@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ImagePlus, RotateCcw } from 'lucide-vue-next'
+import { ImagePlus, Replace, RotateCcw } from 'lucide-vue-next'
 import PreviewCanvas from './PreviewCanvas.vue'
 import WatermarkTypeTabs from './panels/WatermarkTypeTabs.vue'
 import TextWatermarkPanel from './panels/TextWatermarkPanel.vue'
@@ -36,10 +36,20 @@ const store = useWatermarkStore()
         <button
           type="button"
           class="inline-flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-md hover:bg-muted transition-colors duration-200 cursor-pointer"
-          @click="store.reset()"
+          title="保留目前的浮水印設定，換一張新圖"
+          @click="store.clearSource()"
+        >
+          <Replace class="w-4 h-4" />
+          換一張
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-md hover:bg-muted transition-colors duration-200 cursor-pointer"
+          title="把所有浮水印設定還原成預設"
+          @click="store.resetWatermark()"
         >
           <RotateCcw class="w-4 h-4" />
-          換一張
+          重設浮水印
         </button>
       </div>
     </header>

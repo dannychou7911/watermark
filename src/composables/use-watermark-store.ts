@@ -26,6 +26,8 @@ export interface WatermarkStore {
   setCustomPosition: (x: number, y: number) => void
   setRotation: (deg: number) => void
   patchOutput: (patch: Partial<OutputConfig>) => void
+  clearSource: () => void
+  resetWatermark: () => void
   reset: () => void
 }
 
@@ -95,8 +97,13 @@ export function createWatermarkStore(): WatermarkStore {
     Object.assign(state.output, patch)
   }
 
-  function reset() {
+  /** Clear the source image only — keep all watermark settings (incl. uploaded logo) */
+  function clearSource() {
     setSource(null)
+  }
+
+  /** Reset watermark settings to defaults — keep the source image */
+  function resetWatermark() {
     if (state.image.url) URL.revokeObjectURL(state.image.url)
     state.type = 'text'
     Object.assign(state.text, DEFAULT_TEXT)
@@ -105,6 +112,11 @@ export function createWatermarkStore(): WatermarkStore {
     Object.assign(state.position, DEFAULT_POSITION)
     state.rotationDeg = 0
     Object.assign(state.output, DEFAULT_OUTPUT)
+  }
+
+  function reset() {
+    clearSource()
+    resetWatermark()
   }
 
   return {
@@ -118,6 +130,8 @@ export function createWatermarkStore(): WatermarkStore {
     setCustomPosition,
     setRotation,
     patchOutput,
+    clearSource,
+    resetWatermark,
     reset,
   }
 }

@@ -93,6 +93,54 @@ describe('watermark store', () => {
     expect(s.state.rotationDeg).toBe(0)
     expect(s.state.source).toBeNull()
   })
+
+  it('clearSource only clears the source — watermark config preserved', () => {
+    const s = createWatermarkStore()
+    s.setSource(mockSource('blob:src'))
+    s.patchText({ content: 'preserved', fontSize: 99 })
+    s.setRotation(45)
+    s.setCustomPosition(0.2, 0.8)
+    s.patchOutput({ format: 'webp', quality: 0.5 })
+
+    s.clearSource()
+
+    expect(s.state.source).toBeNull()
+    // watermark settings stay
+    expect(s.state.text.content).toBe('preserved')
+    expect(s.state.text.fontSize).toBe(99)
+    expect(s.state.rotationDeg).toBe(45)
+    expect(s.state.position.anchor).toBe('custom')
+    expect(s.state.position.x).toBe(0.2)
+    expect(s.state.output.format).toBe('webp')
+    // and the source URL was revoked
+    expect(revokeSpy).toHaveBeenCalledWith('blob:src')
+  })
+
+  it('resetWatermark restores defaults but keeps the source', () => {
+    const s = createWatermarkStore()
+    s.setSource(mockSource('blob:keep'))
+    s.patchText({ content: 'will-be-reset', fontSize: 99 })
+    s.setRotation(45)
+    s.setCustomPosition(0.2, 0.8)
+    s.patchImage({ url: 'blob:logo', scale: 0.5 })
+    s.patchOutput({ format: 'webp', quality: 0.5 })
+
+    s.resetWatermark()
+
+    // source preserved
+    expect(s.state.source).not.toBeNull()
+    expect(s.state.source?.url).toBe('blob:keep')
+    // watermark settings back to defaults
+    expect(s.state.text.content).toBe('© Watermark')
+    expect(s.state.text.fontSize).toBe(48)
+    expect(s.state.rotationDeg).toBe(0)
+    expect(s.state.position.anchor).toBe('br')
+    expect(s.state.image.url).toBe('')
+    expect(s.state.image.scale).toBe(0.2)
+    expect(s.state.output.format).toBe('original')
+    // image-watermark URL was revoked
+    expect(revokeSpy).toHaveBeenCalledWith('blob:logo')
+  })
 })
 
 function mockSource(url: string) {
