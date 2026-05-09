@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme - based on ui-ux-pro-max recommendation:
+       primary cyan #0891B2, accent green #22C55E, bg #ECFEFF, text #164E63 */
+    --background: 187 100% 96%;          /* #ECFEFF */
+    --foreground: 195 64% 23%;           /* #164E63 */
+    --card: 0 0% 100%;
+    --card-foreground: 195 64% 23%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 195 64% 23%;
+    --primary: 192 91% 36%;              /* #0891B2 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 187 85% 53%;            /* lighter cyan */
+    --secondary-foreground: 195 64% 15%;
+    --muted: 187 60% 92%;
+    --muted-foreground: 195 30% 40%;
+    --accent: 142 71% 45%;               /* #22C55E */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 187 40% 86%;
+    --input: 187 40% 86%;
+    --ring: 192 91% 36%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  /* Respect users who request reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Better focus rings on keyboard nav */
+@layer base {
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
